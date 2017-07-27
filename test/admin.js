@@ -1,0 +1,165 @@
+
+var t = require('assert')
+var fs = require('fs')
+var path = require('path')
+var request = require('@request/client')
+var express = require('express')
+var api = require('../')
+
+
+var port = 3000
+var origin = 'http://localhost:' + port
+
+var keys = {
+  valid: {
+    public: fs.readFileSync(
+      path.resolve(__dirname, 'cert/public.pem'), 'utf8'),
+    private: fs.readFileSync(
+      path.resolve(__dirname, 'cert/private.pem'), 'utf8'),
+  },
+  tampered: {
+    public: fs.readFileSync(
+      path.resolve(__dirname, 'cert/public-tampered.pem'), 'utf8'),
+    private: fs.readFileSync(
+      path.resolve(__dirname, 'cert/private-tampered.pem'), 'utf8'),
+  },
+}
+
+var config = {
+  api: {
+    db: {},
+    auth: keys.valid,
+    github: {
+      config: {github: {}},
+    },
+  },
+}
+
+
+describe('admin', () => {
+  var server
+
+  before((done) => {
+    var app = express()
+    app.use(api(config.api))
+    server = app.listen(port, done)
+  })
+
+  it('Missing Authorization Header', (done) => {
+    request({
+      method: 'POST',
+      url: origin + '/whois/known',
+      parse: {json: true},
+      callback: (err, res, body) => {
+        t.equal(res.statusCode, 401)
+        t.equal(res.statusMessage, 'Unauthorized')
+        t.deepEqual(body, {error: 'Missing Authorization Header'})
+        done()
+      }
+    })
+  })
+
+  it('Invalid Authorization Header - jws throws', (done) => {
+    request({
+      method: 'POST',
+      url: origin + '/whois/known',
+      headers: {authorization: 'hey'},
+      parse: {json: true},
+      callback: (err, res, body) => {
+        t.equal(res.statusCode, 401)
+        t.equal(res.statusMessage, 'Unauthorized')
+        t.deepEqual(body, {error: 'Cannot read property \'toString\' of undefined'})
+        done()
+      }
+    })
+  })
+
+  it('Invalid Authorization Header - tampered token', (done) => {
+    var jwt = api.lib.jwt(keys.tampered)
+    var token = jwt.sign({id: 1, login: 'pencho', admin: true})
+    request({
+      method: 'POST',
+      url: origin + '/whois/known',
+      headers: {authorization: 'Bearer ' + token},
+      parse: {json: true},
+      callback: (err, res, body) => {
+        t.equal(res.statusCode, 401)
+        t.equal(res.statusMessage, 'Unauthorized')
+        t.deepEqual(body, {error: 'Invalid Authorization Header'})
+        done()
+      }
+    })
+  })
+
+  it('Not an Admin', (done) => {
+    var jwt = api.lib.jwt(keys.valid)
+    var token = jwt.sign({id: 1, login: 'simov', admin: false})
+    request({
+      method: 'POST',
+      url: origin + '/whois/known',
+      headers: {authorization: 'Bearer ' + token},
+      parse: {json: true},
+      callback: (err, res, body) => {
+        t.equal(res.statusCode, 401)
+        t.equal(res.statusMessage, 'Unauthorized')
+        t.deepEqual(body, {error: 'Not an Admin'})
+        done()
+      }
+    })
+  })
+
+  it('Authorization Expired', (done) => {
+    var jwt = api.lib.jwt(keys.valid)
+    var token = jwt.sign({id: 1, login: 'simov', admin: true}, -50)
+    request({
+      method: 'POST',
+      url: origin + '/whois/known',
+      headers: {authorization: 'Bearer ' + token},
+      parse: {json: true},
+      callback: (err, res, body) => {
+        t.equal(res.statusCode, 401)
+        t.equal(res.statusMessage, 'Unauthorized')
+        t.deepEqual(body, {error: 'Authorization Expired'})
+        done()
+      }
+    })
+  })
+
+  it('POST /whois/known', (done) => {
+    var jwt = api.lib.jwt(keys.valid)
+    var token = jwt.sign({id: 1, login: 'simov', admin: true})
+    request({
+      method: 'POST',
+      url: origin + '/whois/known',
+      headers: {authorization: 'Bearer ' + token},
+      parse: {json: true},
+      callback: (err, res, body) => {
+        t.equal(res.statusCode, 500)
+        t.equal(res.statusMessage, 'Internal Server Error')
+        t.deepEqual(body, {error: 'Not Implemented'})
+        done()
+      }
+    })
+  })
+
+  it('PATCH /whois/known/:id', (done) => {
+    var jwt = api.lib.jwt(keys.valid)
+    var token = jwt.sign({id: 1, login: 'simov', admin: true})
+    request({
+      method: 'POST',
+      url: origin + '/whois/known',
+      headers: {authorization: 'Bearer ' + token},
+      parse: {json: true},
+      callback: (err, res, body) => {
+        t.equal(res.statusCode, 500)
+        t.equal(res.statusMessage, 'Internal Server Error')
+        t.deepEqual(body, {error: 'Not Implemented'})
+        done()
+      }
+    })
+  })
+
+  after((done) => {
+    server.close(done)
+  })
+})
