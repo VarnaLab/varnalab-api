@@ -1,6 +1,5 @@
 
 var t = require('assert')
-var fs = require('fs')
 var path = require('path')
 var request = require('@request/client')
 var express = require('express')
@@ -12,16 +11,12 @@ var origin = 'http://localhost:' + port
 
 var keys = {
   valid: {
-    public: fs.readFileSync(
-      path.resolve(__dirname, 'cert/public.pem'), 'utf8'),
-    private: fs.readFileSync(
-      path.resolve(__dirname, 'cert/private.pem'), 'utf8'),
+    public: path.resolve(__dirname, 'cert/public.pem'),
+    private: path.resolve(__dirname, 'cert/private.pem'),
   },
   tampered: {
-    public: fs.readFileSync(
-      path.resolve(__dirname, 'cert/public-tampered.pem'), 'utf8'),
-    private: fs.readFileSync(
-      path.resolve(__dirname, 'cert/private-tampered.pem'), 'utf8'),
+    public: path.resolve(__dirname, 'cert/public-tampered.pem'),
+    private: path.resolve(__dirname, 'cert/private-tampered.pem'),
   },
 }
 

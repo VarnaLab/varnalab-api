@@ -1,6 +1,5 @@
 
 var t = require('assert')
-var fs = require('fs')
 var path = require('path')
 var express = require('express')
 var session = require('express-session')
@@ -29,10 +28,8 @@ var config = {
   api: {
     db: {},
     auth: {
-      public: fs.readFileSync(
-        path.resolve(__dirname, 'cert/public.pem'), 'utf8'),
-      private: fs.readFileSync(
-        path.resolve(__dirname, 'cert/private.pem'), 'utf8'),
+      public: path.resolve(__dirname, 'cert/public.pem'),
+      private: path.resolve(__dirname, 'cert/private.pem'),
     },
     github: {
       connect: '/connect/github',

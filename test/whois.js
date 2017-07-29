@@ -1,5 +1,6 @@
 
 var t = require('assert')
+var path = require('path')
 var request = require('@request/client')
 var express = require('express')
 var api = require('../')
@@ -18,6 +19,10 @@ var config = {
     finance: {},
     stats: [],
     online: {known: [], unknown: []},
+  },
+  auth: {
+    public: path.resolve(__dirname, 'cert/public.pem'),
+    private: path.resolve(__dirname, 'cert/private.pem'),
   },
   github: {
     config: {github: {}},
