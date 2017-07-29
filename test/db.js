@@ -15,7 +15,7 @@ describe('db', () => {
   var db
 
   it('init', () => {
-    db = DB(fixtures)
+    db = DB(fixtures, () => {})
     t.deepEqual(db.state, {
       known: [{id: 0, name: 'known'}],
       unknown: [{id: 0, name: 'unknown'}]
@@ -38,6 +38,17 @@ describe('db', () => {
             t.deepEqual(known, [{id: 0, name: 'known1'}])
             done()
           })
+      })
+  })
+
+  it('watch', (done) => {
+    t.deepEqual(db.state.known, [{id: 0, name: 'known1'}])
+    db.write('known', [{id: 0, name: 'known'}])
+      .then((known) => {
+        setTimeout(() => {
+          t.deepEqual(db.state.known, [{id: 0, name: 'known'}])
+          done()
+        }, 50)
       })
   })
 

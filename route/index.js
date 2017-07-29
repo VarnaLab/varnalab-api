@@ -20,7 +20,7 @@ var mw = {
 
 
 module.exports = (config) => {
-  var db = lib.db(config.db)
+  var db = lib.db(config.db, config.log)
   var jwt = lib.jwt(config.auth)
 
   var admin = mw.admin(jwt)
