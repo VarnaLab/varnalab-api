@@ -46,7 +46,8 @@ var config = {
           }
         }
       },
-    }
+    },
+    log: () => {}
   },
   request: {
     method: 'GET',
