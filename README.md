@@ -9,7 +9,6 @@
 - [Origin](#origin)
 - [Public API](#public-api)
 - [Admin API](#admin-api)
-- [Owner API](#owner-api)
 - [Module](#module)
 
 
@@ -131,42 +130,6 @@ Authorization Bearer [Admin JWT]
 
 <details>
 <summary>Update known human</summary>
-
-```json
-{
-  "some": "json"
-}
-```
-</details>
-
----
-
-## Owner API
-
-```
-Authorization Bearer [Owner JWT]
-```
-
-### POST /whois/online
-
-<details>
-<summary>Sync online devices</summary>
-
-```json
-{
-  "some": "json"
-}
-```
-</details>
-
-### POST /finance
-
-<details>
-<summary>Sync financial data and stats</summary>
-
-```
-Authorization Bearer [Owner JWT]
-```
 
 ```json
 {
