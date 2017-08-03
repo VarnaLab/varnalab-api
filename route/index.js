@@ -29,7 +29,7 @@ module.exports = (config) => {
   var api = express()
   api.use(parser.json())
 
-  api.use('/auth', route.auth(jwt, config.github))
+  api.use('/auth', route.auth(jwt, config.github, config.auth.callback))
 
   api.use('/whois', route.whois(db, admin))
   api.use('/finance', route.finance(db))

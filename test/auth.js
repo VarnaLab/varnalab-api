@@ -115,6 +115,10 @@ describe('auth', () => {
       res.json(fixtures.github.user)
     })
 
+    app.use('/api/auth/callback', (req, res) => {
+      res.json(req.query)
+    })
+
     server = app.listen(port, done)
   })
 
@@ -124,6 +128,8 @@ describe('auth', () => {
       callback: (err, res, body) => {
         var token = jwt.decode(body.jwt)
         t.deepEqual(token.payload.sub, fixtures.jwt.user)
+        delete body.jwt
+        t.deepEqual(body, fixtures.jwt.user)
         done()
       }
     }))
@@ -135,6 +141,8 @@ describe('auth', () => {
       callback: (err, res, body) => {
         var token = jwt.decode(body.jwt)
         t.deepEqual(token.payload.sub, fixtures.jwt.admin)
+        delete body.jwt
+        t.deepEqual(body, fixtures.jwt.admin)
         done()
       }
     }))
@@ -147,6 +155,20 @@ describe('auth', () => {
         t.equal(res.statusCode, 500)
         t.equal(res.statusMessage, 'Internal Server Error')
         t.deepEqual(body, {error: 'Cannot read property \'some\' of null'})
+        done()
+      }
+    }))
+  })
+
+  it('GET /auth/login - config callback', (done) => {
+    config.api.auth.callback = '/'
+    fixtures.github.teams = [{id: 1}]
+    request(Object.assign({}, config.request, {
+      callback: (err, res, body) => {
+        var token = jwt.decode(body.jwt)
+        t.deepEqual(token.payload.sub, fixtures.jwt.user)
+        delete body.jwt
+        t.deepEqual(body, fixtures.jwt.user)
         done()
       }
     }))

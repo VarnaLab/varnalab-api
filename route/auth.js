@@ -1,9 +1,10 @@
 
+var qs = require('qs')
 var express = require('express')
 var GitHub = require('../lib/github')
 
 
-module.exports = (jwt, gh) => {
+module.exports = (jwt, gh, callback) => {
   var api = express()
   var github = GitHub(gh.config)
 
@@ -20,7 +21,10 @@ module.exports = (jwt, gh) => {
     ])
     .then(([user, admin]) => {
       var payload = Object.assign(user, {admin})
-      res.json({jwt: jwt.sign(payload)})
+      var data = Object.assign({}, payload, {jwt: jwt.sign(payload)})
+      callback
+        ? res.redirect(callback + '?' + qs.stringify(data))
+        : res.json(data)
     })
     .catch((err) => next(err))
   })

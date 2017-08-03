@@ -18,7 +18,8 @@
     "express": "^4.15.3",
     "jws": "^3.1.4",
     "minimist": "^1.2.0",
-    "purest": "^3.1.0"
+    "purest": "^3.1.0",
+    "qs": "^6.5.0"
   },
   "devDependencies": {
     "@request/log": "^0.1.0",
@@ -27,7 +28,6 @@
     "grant": "^3.8.0",
     "istanbul": "^0.4.5",
     "mocha": "^3.4.2",
-    "qs": "^6.5.0",
     "tough-cookie": "^2.3.2"
   },
   "bin": {
