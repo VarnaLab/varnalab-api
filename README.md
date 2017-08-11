@@ -33,7 +33,8 @@ https://api.varnalab.org[API Endpoint] # production
 
 ```json
 {
-  "some": "json"
+  "admin": true,
+  "jwt": "..."
 }
 ```
 </details>
@@ -48,9 +49,16 @@ https://api.varnalab.org[API Endpoint] # production
 <summary>All known people</summary>
 
 ```json
-{
-  "some": "json"
-}
+[
+  {
+    "id": "b0e915e2-e60c-4d4d-a693-343c9c0234c9",
+    "name": "Симеон Величков",
+    "gravatar": "bc8400cd663c63dbdbc8607870390a20",
+    "backer": "Симо V",
+    "github": "simov",
+    "twitter": "_simov"
+  }
+]
 ```
 </details>
 
@@ -61,7 +69,20 @@ https://api.varnalab.org[API Endpoint] # production
 
 ```json
 {
-  "some": "json"
+  "known": [
+    "b93b098c-adb5-48ce-8dd1-8828f39d99d3",
+    "42ccbc1a-f0bc-416d-a7f7-f4c6e0910023"
+  ],
+  "unknown": [
+    {
+      "host": "debian",
+      "vendor": "Intel Corporate"
+    },
+    {
+      "host": "android-cae44bf1974b5f66",
+      "vendor": "Motorola Mobility LLC, a Lenovo Company"
+    }
+  ]
 }
 ```
 </details>
@@ -77,7 +98,8 @@ https://api.varnalab.org[API Endpoint] # production
 
 ```json
 {
-  "some": "json"
+  "income": {...},
+  "spend": {...}
 }
 ```
 </details>
@@ -88,9 +110,10 @@ https://api.varnalab.org[API Endpoint] # production
 <summary>All financial stats</summary>
 
 ```json
-{
-  "some": "json"
-}
+[
+  [...],
+  [...]
+]
 ```
 </details>
 
@@ -100,9 +123,38 @@ https://api.varnalab.org[API Endpoint] # production
 <summary>Backers stats</summary>
 
 ```json
-{
-  "some": "json"
-}
+[
+  {
+    "name": "Тодор Драгнев",
+    "monthly": [50,50,50,50,50,80,50,50,0,0,0,0],
+    "total": 430,
+    "average": 61
+  }
+]
+```
+</details>
+
+---
+
+## Events
+
+### GET /events?offset=0&limit=10
+
+<details>
+<summary>VarnaLab Events</summary>
+
+```json
+[
+  {
+    "id": "2044728552423780",
+    "name": "LoraWAN - TTN Varna meeting September 2017",
+    "description": "Отново ще експериментираме с крайните устройства, ще закачим GPS модул и ще си поиграем и с един аналогов осцилоскоп :)",
+    "photo": "https://scontent.xx.fbcdn.net/v/t1.0-0/p480x480/20620935_1515230891867157_3034615754728253404_n.jpg?oh=434022dbe5157cd3a75ce45f5b556de6&oe=5A24590D",
+    "start_time": "2017-09-16T11:00:00+0300",
+    "end_time": "2017-09-16T18:00:00+0300",
+    "updated_time": "2017-08-07T13:28:38+0000"
+  }
+]
 ```
 </details>
 
@@ -152,7 +204,8 @@ Authorization Bearer [Admin JWT]
       "unknown": "/path/to/unknown.json",
       "online": "/path/to/online.json",
       "finance": "/path/to/finance.json",
-      "stats": "/path/to/stats.json"
+      "stats": "/path/to/stats.json",
+      "events": "/path/to/events.json"
     },
     "auth": {
       "public": "/path/to/public.pem",
