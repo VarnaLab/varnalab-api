@@ -6,6 +6,7 @@ var route = {
   auth: require('./auth'),
   whois: require('./whois'),
   finance: require('./finance'),
+  events: require('./events'),
 }
 
 var lib = {
@@ -33,6 +34,7 @@ module.exports = (config) => {
 
   api.use('/whois', route.whois(db, admin))
   api.use('/finance', route.finance(db))
+  api.use('/events', route.events(db))
 
   api.use(error)
 
