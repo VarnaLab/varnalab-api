@@ -27,6 +27,7 @@ var config = {
     github: {
       config: {github: {}},
     },
+    slack: {},
     log: () => {}
   },
 }

@@ -47,6 +47,7 @@ var config = {
         }
       },
     },
+    slack: {},
     log: () => {}
   },
   request: {

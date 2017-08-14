@@ -1,8 +1,10 @@
 
 var express = require('express')
+var Events = require('../lib/events')
 
 
 module.exports = (db) => {
+  var events = Events(db)
   var api = express()
 
   api.get('/', (req, res) => {
@@ -18,20 +20,7 @@ module.exports = (db) => {
   })
 
   api.get('/upcoming', (req, res) => {
-    var now = new Date().getTime()
-    var upcoming = []
-
-    for (var event of db.state.events) {
-      var start = new Date(event.start_time).getTime()
-      if (start >= now) {
-        upcoming.push(event)
-      }
-      else {
-        break
-      }
-    }
-
-    res.json(upcoming)
+    res.json(events.upcoming())
   })
 
   return api
