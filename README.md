@@ -9,6 +9,7 @@
 - [Origin](#origin)
 - [Public API](#public-api)
 - [Admin API](#admin-api)
+- [Slack API](#slack-api)
 - [Module](#module)
 
 
@@ -43,6 +44,8 @@ https://api.varnalab.org[API Endpoint] # production
 
 ## Whois
 
+> **[varnalab-whois]**
+
 ### GET /whois/known
 
 <details>
@@ -75,10 +78,12 @@ https://api.varnalab.org[API Endpoint] # production
   ],
   "unknown": [
     {
+      "id": "6197b1fd-9fb7-473f-bdb9-a9a832065c72",
       "host": "debian",
       "vendor": "Intel Corporate"
     },
     {
+      "id": "71c325b8-f123-46d9-847c-97bf45fb37f7",
       "host": "android-cae44bf1974b5f66",
       "vendor": "Motorola Mobility LLC, a Lenovo Company"
     }
@@ -90,6 +95,8 @@ https://api.varnalab.org[API Endpoint] # production
 ---
 
 ## Finance
+
+> **[varnalab-finance]**
 
 ### GET /finance
 
@@ -138,10 +145,52 @@ https://api.varnalab.org[API Endpoint] # production
 
 ## Events
 
-### GET /events?offset=0&limit=10
+### GET /events
+
+- `offset` *0*
+- `limit` *10*
 
 <details>
-<summary>VarnaLab Events</summary>
+<summary>VarnaLab Events Range</summary>
+
+```json
+[
+  {
+    "id": "2044728552423780",
+    "name": "LoraWAN - TTN Varna meeting September 2017",
+    "description": "Отново ще експериментираме с крайните устройства, ще закачим GPS модул и ще си поиграем и с един аналогов осцилоскоп :)",
+    "photo": "https://scontent.xx.fbcdn.net/v/t1.0-0/p480x480/20620935_1515230891867157_3034615754728253404_n.jpg?oh=434022dbe5157cd3a75ce45f5b556de6&oe=5A24590D",
+    "start_time": "2017-09-16T11:00:00+0300",
+    "end_time": "2017-09-16T18:00:00+0300",
+    "updated_time": "2017-08-07T13:28:38+0000"
+  }
+]
+```
+</details>
+
+
+- `id` *Event ID*
+
+<details>
+<summary>Single VarnaLab Event</summary>
+
+```json
+{
+  "id": "2044728552423780",
+  "name": "LoraWAN - TTN Varna meeting September 2017",
+  "description": "Отново ще експериментираме с крайните устройства, ще закачим GPS модул и ще си поиграем и с един аналогов осцилоскоп :)",
+  "photo": "https://scontent.xx.fbcdn.net/v/t1.0-0/p480x480/20620935_1515230891867157_3034615754728253404_n.jpg?oh=434022dbe5157cd3a75ce45f5b556de6&oe=5A24590D",
+  "start_time": "2017-09-16T11:00:00+0300",
+  "end_time": "2017-09-16T18:00:00+0300",
+  "updated_time": "2017-08-07T13:28:38+0000"
+}
+```
+</details>
+
+### GET /events/upcoming
+
+<details>
+<summary>Upcoming Events</summary>
 
 ```json
 [
@@ -189,6 +238,18 @@ Authorization Bearer [Admin JWT]
 }
 ```
 </details>
+
+---
+
+## Slack API
+
+### POST /slack/whois
+
+Slack attachments: Whois Online in VarnaLab
+
+### POST /slack/events
+
+Slack attachments: Upcoming Events in VarnaLab
 
 ---
 
@@ -241,3 +302,6 @@ node bin/ --config /path/to/config.json
 
   [travis]: https://travis-ci.org/VarnaLab/varnalab-api
   [coveralls]: https://coveralls.io/github/VarnaLab/varnalab-api
+
+  [varnalab-whois]: https://github.com/VarnaLab/varnalab-whois
+  [varnalab-finance]: https://github.com/VarnaLab/varnalab-finance
