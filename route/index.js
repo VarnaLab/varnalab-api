@@ -13,6 +13,8 @@ var route = {
 var lib = {
   db: require('../lib/db'),
   jwt: require('../lib/jwt'),
+  log: require('../lib/log'),
+  user: require('../lib/user'),
 }
 
 var mw = {
@@ -24,6 +26,8 @@ var mw = {
 module.exports = (config) => {
   var db = lib.db(config.db, config.log)
   var jwt = lib.jwt(config.auth)
+  var log = config.log || lib.log('varnalab')
+  var user = lib.user(db)
 
   var admin = mw.admin(jwt)
   var error = mw.error(config)
@@ -33,7 +37,7 @@ module.exports = (config) => {
 
   api.use('/auth', route.auth(jwt, config.github, config.auth.callback))
 
-  api.use('/whois', route.whois(db, admin))
+  api.use('/whois', route.whois(db, admin, user, log))
   api.use('/finance', route.finance(db))
   api.use('/events', route.events(db))
   api.use('/slack', route.slack(db, config.slack.token))

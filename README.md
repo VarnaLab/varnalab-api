@@ -218,11 +218,11 @@ Authorization Bearer [Admin JWT]
 ### POST /whois/known
 
 <details>
-<summary>Add new known human</summary>
+<summary>Add new known user</summary>
 
 ```json
 {
-  "some": "json"
+  "id": ""
 }
 ```
 </details>
@@ -230,11 +230,23 @@ Authorization Bearer [Admin JWT]
 ### PATCH /whois/known/:id
 
 <details>
-<summary>Update known human</summary>
+<summary>Update known user</summary>
 
 ```json
 {
-  "some": "json"
+  "id": ""
+}
+```
+</details>
+
+### DELETE /whois/known/:id
+
+<details>
+<summary>Delete known user</summary>
+
+```json
+{
+  "id": ""
 }
 ```
 </details>

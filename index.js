@@ -3,10 +3,12 @@ var app = require('./route/')
 
 app.lib = {
   db: require('./lib/db'),
+  events: require('./lib/events'),
   github: require('./lib/github'),
   jwt: require('./lib/jwt'),
-  // known: require('./lib/known'),
   log: require('./lib/log'),
+  slack: require('./lib/slack'),
+  user: require('./lib/user'),
 }
 
 app.mw = {

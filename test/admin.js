@@ -22,7 +22,9 @@ var keys = {
 
 var config = {
   api: {
-    db: {},
+    db: {
+      known: path.resolve(__dirname, './fixtures/known.json'),
+    },
     auth: keys.valid,
     github: {
       config: {github: {}},
@@ -122,37 +124,80 @@ describe('admin', () => {
     })
   })
 
-  it('POST /whois/known', (done) => {
-    var jwt = api.lib.jwt(keys.valid)
-    var token = jwt.sign({id: 1, login: 'simov', admin: true})
-    request({
-      method: 'POST',
-      url: origin + '/whois/known',
-      headers: {authorization: 'Bearer ' + token},
-      parse: {json: true},
-      callback: (err, res, body) => {
-        t.equal(res.statusCode, 500)
-        t.equal(res.statusMessage, 'Internal Server Error')
-        t.deepEqual(body, {error: 'Not Implemented'})
-        done()
-      }
+  describe('update', () => {
+    var id
+    it('POST /whois/known', (done) => {
+      var jwt = api.lib.jwt(keys.valid)
+      var token = jwt.sign({id: 1, login: 'simov', admin: true})
+      request({
+        method: 'POST',
+        url: origin + '/whois/known',
+        headers: {authorization: 'Bearer ' + token},
+        json: {user: {id: 1, name: 'simo'}},
+        parse: {json: true},
+        callback: (err, res, body) => {
+          id = body.id
+          request({
+            method: 'GET',
+            url: origin + '/whois/known',
+            parse: {json: true},
+            callback: (err, res, users) => {
+              t.equal(users.length, 2)
+              t.equal(users[1].name, 'simo')
+              done()
+            }
+          })
+        }
+      })
     })
-  })
 
-  it('PATCH /whois/known/:id', (done) => {
-    var jwt = api.lib.jwt(keys.valid)
-    var token = jwt.sign({id: 1, login: 'simov', admin: true})
-    request({
-      method: 'POST',
-      url: origin + '/whois/known',
-      headers: {authorization: 'Bearer ' + token},
-      parse: {json: true},
-      callback: (err, res, body) => {
-        t.equal(res.statusCode, 500)
-        t.equal(res.statusMessage, 'Internal Server Error')
-        t.deepEqual(body, {error: 'Not Implemented'})
-        done()
-      }
+    it('PATCH /whois/known', (done) => {
+      var jwt = api.lib.jwt(keys.valid)
+      var token = jwt.sign({id: 1, login: 'simov', admin: true})
+      request({
+        method: 'PATCH',
+        url: origin + '/whois/known',
+        headers: {authorization: 'Bearer ' + token},
+        json: {user: {id, name: 'simov'}},
+        parse: {json: true},
+        callback: (err, res, body) => {
+          id = body.id
+          request({
+            method: 'GET',
+            url: origin + '/whois/known',
+            parse: {json: true},
+            callback: (err, res, users) => {
+              t.equal(users.length, 2)
+              t.equal(users[1].name, 'simov')
+              done()
+            }
+          })
+        }
+      })
+    })
+
+    it('DELETE /whois/known', (done) => {
+      var jwt = api.lib.jwt(keys.valid)
+      var token = jwt.sign({id: 1, login: 'simov', admin: true})
+      request({
+        method: 'DELETE',
+        url: origin + '/whois/known',
+        headers: {authorization: 'Bearer ' + token},
+        json: {user: {id}},
+        parse: {json: true},
+        callback: (err, res, body) => {
+          id = body.id
+          request({
+            method: 'GET',
+            url: origin + '/whois/known',
+            parse: {json: true},
+            callback: (err, res, users) => {
+              t.equal(users.length, 1)
+              done()
+            }
+          })
+        }
+      })
     })
   })
 

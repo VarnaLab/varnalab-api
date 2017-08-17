@@ -16,10 +16,12 @@
     "@request/client": "^0.1.0",
     "body-parser": "^1.17.2",
     "express": "^4.15.3",
+    "gravatar-url": "^2.0.0",
     "jws": "^3.1.4",
     "minimist": "^1.2.0",
     "purest": "^3.1.0",
-    "qs": "^6.5.0"
+    "qs": "^6.5.0",
+    "uuid": "^3.1.0"
   },
   "devDependencies": {
     "@request/log": "^0.1.0",
