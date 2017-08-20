@@ -24,9 +24,10 @@ var mw = {
 
 
 module.exports = (config) => {
-  var db = lib.db(config.db, config.log)
-  var jwt = lib.jwt(config.auth)
   var log = config.log || lib.log('varnalab')
+
+  var db = lib.db(config.db, log)
+  var jwt = lib.jwt(config.auth)
   var user = lib.user(db)
 
   var admin = mw.admin(jwt)
