@@ -273,8 +273,8 @@ Slack attachments: Upcoming Events in VarnaLab
 {
   "development": {
     "db": {
-      "known": "/path/to/known.json",
-      "unknown": "/path/to/unknown.json",
+      "users": "/path/to/users.json",
+      "devices": "/path/to/devices.json",
       "online": "/path/to/online.json",
       "finance": "/path/to/finance.json",
       "stats": "/path/to/stats.json",
@@ -286,7 +286,10 @@ Slack attachments: Upcoming Events in VarnaLab
     },
     "github": {
       "connect": "/oauth/connect/route",
-      "team": "GitHub Team ID"
+      "team": "[Team ID]"
+    },
+    "slack": {
+      "token": "[WebHook Token]"
     }
   }
 }

@@ -10,7 +10,7 @@ var origin = 'http://localhost:' + port
 
 var config = {
   db: {
-    known: path.resolve(__dirname, './fixtures/known.json'),
+    users: path.resolve(__dirname, './fixtures/users.json'),
     finance: {},
     stats: [],
     online: {},
@@ -32,9 +32,9 @@ describe('user', () => {
     id = add.id
 
     setTimeout(() => {
-      t.equal(db.state.known[1].name, 'simo')
-      t.equal(db.state.known[1].gravatar, '9ae7c2641396f254519ccdfdd36b7e47')
-      t.equal(JSON.parse(fs.readFileSync(config.db.known, 'utf8'))[1].name, 'simo')
+      t.equal(db.state.users[1].name, 'simo')
+      t.equal(db.state.users[1].gravatar, '9ae7c2641396f254519ccdfdd36b7e47')
+      t.equal(JSON.parse(fs.readFileSync(config.db.users, 'utf8'))[1].name, 'simo')
       done()
     }, 50)
   })
@@ -45,8 +45,8 @@ describe('user', () => {
     t.equal(change.name, 'simov')
 
     setTimeout(() => {
-      t.equal(db.state.known[1].name, 'simov')
-      t.equal(JSON.parse(fs.readFileSync(config.db.known, 'utf8'))[1].name, 'simov')
+      t.equal(db.state.users[1].name, 'simov')
+      t.equal(JSON.parse(fs.readFileSync(config.db.users, 'utf8'))[1].name, 'simov')
       done()
     }, 50)
   })
@@ -56,8 +56,8 @@ describe('user', () => {
     t.equal(remove.name, 'simov')
 
     setTimeout(() => {
-      t.equal(db.state.known.length, 1)
-      t.equal(JSON.parse(fs.readFileSync(config.db.known, 'utf8')).length, 1)
+      t.equal(db.state.users.length, 1)
+      t.equal(JSON.parse(fs.readFileSync(config.db.users, 'utf8')).length, 1)
       done()
     }, 50)
   })

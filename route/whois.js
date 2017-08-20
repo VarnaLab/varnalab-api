@@ -6,7 +6,7 @@ module.exports = (db, admin, user, log) => {
   var api = express()
 
   api.get('/known', (req, res) => {
-    res.json(db.state.known
+    res.json(db.state.users
       .map(
         ({id, name, gravatar, backer, github, twitter}) =>
         ({id, name, gravatar, backer, github, twitter})

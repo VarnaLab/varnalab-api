@@ -6,8 +6,8 @@ var api = require('../')
 var DB = api.lib.db
 
 var fixtures = {
-  known: path.join(__dirname, 'fixtures/known.json'),
-  unknown: path.join(__dirname, 'fixtures/unknown.json'),
+  users: path.join(__dirname, 'fixtures/users.json'),
+  devices: path.join(__dirname, 'fixtures/devices.json'),
 }
 
 
@@ -17,43 +17,43 @@ describe('db', () => {
   it('init', () => {
     db = DB(fixtures, () => {})
     t.deepEqual(db.state, {
-      known: [{id: 0, name: 'known'}],
-      unknown: [{id: 0, name: 'unknown'}]
+      users: [{id: 0, name: 'known'}],
+      devices: [{id: 0, name: 'unknown'}]
     })
   })
 
   it('read', (done) => {
-    db.read('known')
-      .then((known) => {
-        t.deepEqual(known, [{id: 0, name: 'known'}])
+    db.read('users')
+      .then((users) => {
+        t.deepEqual(users, [{id: 0, name: 'known'}])
         done()
       })
   })
 
   it('write', (done) => {
-    db.write('known', [{id: 0, name: 'known1'}])
-      .then((known) => {
-        db.read('known')
-          .then((known) => {
-            t.deepEqual(known, [{id: 0, name: 'known1'}])
+    db.write('users', [{id: 0, name: 'known1'}])
+      .then((users) => {
+        db.read('users')
+          .then((users) => {
+            t.deepEqual(users, [{id: 0, name: 'known1'}])
             done()
           })
       })
   })
 
   it('watch', (done) => {
-    t.deepEqual(db.state.known, [{id: 0, name: 'known1'}])
-    db.write('known', [{id: 0, name: 'known'}])
-      .then((known) => {
+    t.deepEqual(db.state.users, [{id: 0, name: 'known1'}])
+    db.write('users', [{id: 0, name: 'known'}])
+      .then((users) => {
         setTimeout(() => {
-          t.deepEqual(db.state.known, [{id: 0, name: 'known'}])
+          t.deepEqual(db.state.users, [{id: 0, name: 'known'}])
           done()
         }, 50)
       })
   })
 
   after((done) => {
-    db.write('known', [{id: 0, name: 'known'}])
+    db.write('users', [{id: 0, name: 'known'}])
       .then(done)
   })
 })

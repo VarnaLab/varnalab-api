@@ -11,7 +11,7 @@ var origin = 'http://localhost:' + port
 
 var config = {
   db: {
-    known: [{
+    users: [{
       id: 1, name: 'simo', gravatar: 'hey', backer: 'sure',
       github: 'empty', twitter: 'yus',
       email: 'hq@varnalab.org', mac: ['mac1', 'mac2']
@@ -47,7 +47,7 @@ describe('whois', () => {
       url: origin + '/whois/known',
       parse: {json: true},
       callback: (err, res, body) => {
-        t.deepEqual(body, config.db.known
+        t.deepEqual(body, config.db.users
           .map(
             ({id, name, gravatar, backer, github, twitter}) =>
             ({id, name, gravatar, backer, github, twitter})

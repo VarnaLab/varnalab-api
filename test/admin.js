@@ -23,7 +23,7 @@ var keys = {
 var config = {
   api: {
     db: {
-      known: path.resolve(__dirname, './fixtures/known.json'),
+      users: path.resolve(__dirname, './fixtures/users.json'),
     },
     auth: keys.valid,
     github: {

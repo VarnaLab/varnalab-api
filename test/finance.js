@@ -11,7 +11,7 @@ var origin = 'http://localhost:' + port
 
 var config = {
   db: {
-    known: [],
+    users: [],
     finance: {income: 'hey', spend: 'wow'},
     stats: ['stat1', 'stat2'],
     online: {},
