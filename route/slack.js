@@ -24,7 +24,7 @@ module.exports = (db, token) => {
     res.json({attachments: [
       slack.attachment.known(
         db.state.online.known
-          .map((id) => db.state.known.find((user) => user.id === id))
+          .map((id) => db.state.users.find((user) => user.id === id))
       ),
       slack.attachment.unknown(
         db.state.online.unknown
