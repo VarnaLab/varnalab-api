@@ -9,6 +9,7 @@ var route = {
   events: require('./events'),
   slack: require('./slack'),
   render: require('./render'),
+  git: require('./git'),
 }
 
 var lib = {
@@ -16,10 +17,12 @@ var lib = {
   jwt: require('../lib/jwt'),
   log: require('../lib/log'),
   user: require('../lib/user'),
+  git: require('../lib/git'),
 }
 
 var mw = {
   admin: require('../mw/admin'),
+  git: require('../mw/git'),
   error: require('../mw/error'),
 }
 
@@ -33,6 +36,7 @@ module.exports = (config) => {
 
   var admin = mw.admin(jwt)
   var error = mw.error(config)
+  var git = mw.git(config, lib.git())
 
   var api = express()
   api.use(parser.json())
@@ -44,6 +48,7 @@ module.exports = (config) => {
   api.use('/events', route.events(db))
   api.use('/slack', route.slack(db, config.slack.token))
   api.use('/render', route.render(db))
+  api.use('/git', route.git(config, git))
 
   api.use(error)
 
