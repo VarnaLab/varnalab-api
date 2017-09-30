@@ -21,15 +21,12 @@ module.exports = (db, token) => {
   })
 
   api.post('/whois', (req, res) => {
-    res.json({attachments: [
-      slack.attachment.known(
-        db.state.online.known
-          .map((id) => db.state.users.find((user) => user.id === id))
-      ),
-      slack.attachment.unknown(
-        db.state.online.unknown
-      )
-    ]})
+    res.json({attachments: slack.attachment.whois({
+      known: (db.state.online.known || [])
+        .map((id) => db.state.users.find((user) => user.id === id)),
+      unknown: db.state.online.unknown,
+      error: db.state.online.error,
+    })})
   })
 
   api.post('/events', (req, res) => {
