@@ -32,6 +32,7 @@ module.exports = (db, token) => {
   api.post('/events', (req, res) => {
     res.json({attachments:
       events.upcoming()
+        .sort((a, b) => new Date(b.start_time) - new Date(a.start_time))
         .map((event) => slack.attachment.event(event))
     })
   })

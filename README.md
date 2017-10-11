@@ -187,6 +187,29 @@ https://api.varnalab.org[API Endpoint] # production
 ```
 </details>
 
+### GET /events/past
+
+- `offset` *0*
+- `limit` *10*
+
+<details>
+<summary>Past Events Range</summary>
+
+```json
+[
+  {
+    "id": "2044728552423780",
+    "name": "LoraWAN - TTN Varna meeting September 2017",
+    "description": "Отново ще експериментираме с крайните устройства, ще закачим GPS модул и ще си поиграем и с един аналогов осцилоскоп :)",
+    "photo": "https://scontent.xx.fbcdn.net/v/t1.0-0/p480x480/20620935_1515230891867157_3034615754728253404_n.jpg?oh=434022dbe5157cd3a75ce45f5b556de6&oe=5A24590D",
+    "start_time": "2017-09-16T11:00:00+0300",
+    "end_time": "2017-09-16T18:00:00+0300",
+    "updated_time": "2017-08-07T13:28:38+0000"
+  }
+]
+```
+</details>
+
 ### GET /events/upcoming
 
 <details>

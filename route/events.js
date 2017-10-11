@@ -23,5 +23,15 @@ module.exports = (db) => {
     res.json(events.upcoming())
   })
 
+  api.get('/past', (req, res) => {
+    var offset = parseInt(req.query.offset || 0)
+    var limit = parseInt(req.query.limit || 10)
+    res.json(
+      db.state.events
+        .slice(events.upcoming().length)
+        .slice(offset, offset + limit)
+    )
+  })
+
   return api
 }
