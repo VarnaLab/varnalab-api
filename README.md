@@ -232,6 +232,20 @@ https://api.varnalab.org[API Endpoint] # production
 
 ---
 
+## Articles
+
+### GET /articles
+
+<details>
+<summary>Articles</summary>
+
+```json
+
+```
+</details>
+
+---
+
 ## Admin API
 
 ```

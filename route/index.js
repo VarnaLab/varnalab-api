@@ -7,6 +7,7 @@ var route = {
   whois: require('./whois'),
   finance: require('./finance'),
   events: require('./events'),
+  articles: require('./articles'),
   slack: require('./slack'),
   render: require('./render'),
   git: require('./git'),
@@ -46,6 +47,7 @@ module.exports = (config) => {
   api.use('/whois', route.whois(db, admin, user, log))
   api.use('/finance', route.finance(db))
   api.use('/events', route.events(db))
+  api.use('/articles', route.articles(db))
   api.use('/slack', route.slack(db, config.slack.token))
   api.use('/render', route.render(db))
   api.use('/git', route.git(config, git))
