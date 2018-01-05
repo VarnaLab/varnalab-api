@@ -141,6 +141,16 @@ https://api.varnalab.org[API Endpoint] # production
 ```
 </details>
 
+### GET /finance/invbg/cachebox
+
+<details>
+<summary>InvBG Cachebox</summary>
+
+```json
+
+```
+</details>
+
 ---
 
 ## Events
@@ -315,6 +325,7 @@ Slack attachments: Upcoming Events in VarnaLab
       "online": "/path/to/online.json",
       "finance": "/path/to/finance.json",
       "stats": "/path/to/stats.json",
+      "invbg": "/path/to/invbg.json",
       "events": "/path/to/events.json"
     },
     "auth": {
