@@ -141,10 +141,10 @@ https://api.varnalab.org[API Endpoint] # production
 ```
 </details>
 
-### GET /finance/invbg/cachebox
+### GET /finance/invbg/cashbox
 
 <details>
-<summary>InvBG Cachebox</summary>
+<summary>InvBG Cashbox</summary>
 
 ```json
 

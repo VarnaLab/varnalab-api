@@ -17,7 +17,7 @@ module.exports = (db) => {
     res.json(db.state.stats[0])
   })
 
-  api.get('/invbg/cachebox', (req, res) => {
+  api.get('/invbg/cashbox', (req, res) => {
     res.json(db.state.invbg)
   })
 
