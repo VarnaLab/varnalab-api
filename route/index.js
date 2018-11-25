@@ -40,6 +40,7 @@ module.exports = (config) => {
   var git = mw.git(config, lib.git())
 
   var api = express()
+  api.use(parser.urlencoded({extended: true}))
   api.use(parser.json())
 
   api.use('/auth', route.auth(jwt, config.github, config.auth.callback))
